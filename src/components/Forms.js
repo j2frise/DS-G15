@@ -191,10 +191,112 @@ export const Register = () => {
           </Form.Group>
 
           <div className="mt-4 text-center">
-            <Button variant="primary" type="submit">sign up</Button>
+            <Button className="col-12 col-md-5" variant="primary" type="submit">sign up</Button>
           </div>
           <div className="mt-3 text-center">
-            <Link  className="col-12 col-md-5" to={Routes.Auth.path}>I want to sign in</Link>
+            <Link to={Routes.Auth.path}>I want to sign in</Link>
+          </div>
+      </Form>
+    </>
+  );
+};
+
+
+export const ResetPassword = () => {
+  const [sendValue, setSendValue] = useState({})
+  const [display, setDisplay] = useState({message:null, type:null});
+  const history = useHistory();
+
+  const defaultData =  {
+    "email": null,
+    "password": null,
+    "confirm": null
+  }
+  function handleChange(e){
+
+    let value = e.target.value.trim()
+    let stateField = e.target.name
+    setSendValue({
+      ...sendValue,
+      [stateField]: value?value:null
+    })
+  }
+
+  function register(e){
+    e.preventDefault();
+    send();
+  }
+
+  function send(){
+    let nb = 0;
+    for (const key in sendValue) {
+      if (Object.hasOwnProperty.call(sendValue, key)) {
+        const element = sendValue[key];
+        if(!element){
+          nb++;
+        }
+      }
+    }
+
+    if(nb > 0){
+      setDisplay({
+        message: "Veuillez remplir tous les champs",
+        type: "danger"
+      })
+    }
+    else {
+      if(sendValue.password != sendValue.confirm){
+        setDisplay({
+          message: "Les mots de passe doivent être identiques",
+          type: "danger"
+        })
+      } else {
+        const req = signup({email: sendValue.email, password: sendValue.password});
+        if(req == "success"){
+          setDisplay({
+            message: "Compte créé avec succès",
+            type: "success"
+          })
+          setTimeout(() => {
+            history.push(Routes.Auth.path);
+          }, 3000);
+        } else {
+          setDisplay({
+            message: req,
+            type: "danger"
+          })
+        }
+      }
+    }
+  }
+
+  return (
+    <>
+      <h1>Change passeword</h1>
+      <Form onSubmit={async (e)=>{register(e)}} className="mt-5">
+          {display.message && display.type &&
+            <Form.Group className="mt-4 mb-2">
+              <Alert variant={display.type}>{display.message}</Alert>
+            </Form.Group>
+          }
+
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Old Password</Form.Label>
+            <Form.Control required type="password" name="old" onChange={(e)=>{handleChange(e)}} placeholder="**********" />
+          </Form.Group>
+
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>New Password</Form.Label>
+            <Form.Control required type="password" name="password" onChange={(e)=>{handleChange(e)}} placeholder="**********" />
+          </Form.Group>
+
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Password confirmation</Form.Label>
+            <Form.Control required type="password" name="confirm" onChange={(e)=>{handleChange(e)}} placeholder="**********" />
+          </Form.Group>
+
+          <div className="mt-4 text-center">
+            <Button variant="primary" type="submit">send</Button>
           </div>
       </Form>
     </>
