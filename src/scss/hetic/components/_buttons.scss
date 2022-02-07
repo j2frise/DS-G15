@@ -1,0 +1,21 @@
+/*
+* = Buttons
+*/
+
+.btn {
+    border-radius: 0;
+    padding: 0.675rem 1.95rem;
+    text-transform: uppercase;
+    &.btn-md {
+        padding: 0.95rem 2.25rem;
+    }
+
+    &.btn-xs {
+        padding  : 0.475rem 1.45rem;
+        font-size: 0.7rem;
+    }
+
+    &:hover, &:active {
+        background: $primary-variant;
+    }
+}

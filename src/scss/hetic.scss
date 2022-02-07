@@ -1,0 +1,20 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;800;900&display=swap');
+
+// Change variables here
+@import "hetic/variables";
+
+// Bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+// Utilities
+@import "hetic/reboot";
+
+// Layout
+@import "hetic/layout";
+
+// Components
+@import "hetic/components";
+
+// write your custom styles here!
