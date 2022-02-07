@@ -35,6 +35,12 @@ export const Login = () => {
     <>
       <h1>Sign in</h1>
       <Form onSubmit={async (e)=>{login(e)}} className="mt-5">
+          {display.message && display.type &&
+            <Form.Group className="mt-4 mb-2">
+              <Alert variant={display.type}>{display.message}</Alert>
+            </Form.Group>
+          }
+          
           <Form.Group className="mt-4 mb-2">
             <Form.Label>Email</Form.Label>
             <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
@@ -89,6 +95,12 @@ export const Register = () => {
     <>
       <h1>Sign up</h1>
       <Form onSubmit={async (e)=>{register(e)}} className="mt-5">
+          {display.message && display.type &&
+            <Form.Group className="mt-4 mb-2">
+              <Alert variant={display.type}>{display.message}</Alert>
+            </Form.Group>
+          }
+
           <Form.Group className="mt-4 mb-2">
             <Form.Label>Email</Form.Label>
             <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
@@ -138,13 +150,33 @@ export const Forgot = () => {
   }
 
   function send(){
-    
+    let nb = 0;
+    sendValue.forEach(element => {
+      if(!element.trim()){
+        nb++;
+      }
+    });
+    if(nb > 0){
+      setDisplay({
+        message: "Veuillez remplir tous les champs",
+        type: "danger"
+      })
+    }
+    else {
+
+    }
   }
   
   return (
     <>
       <h1>Forgot</h1>
       <Form onSubmit={async (e)=>{forgot(e)}} className="mt-5">
+          {display.message && display.type &&
+            <Form.Group className="mt-4 mb-2">
+              <Alert variant={display.type}>{display.message}</Alert>
+            </Form.Group>
+          }
+
           <Form.Group className="mt-4 mb-2">
             <Form.Label>Email</Form.Label>
             <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
