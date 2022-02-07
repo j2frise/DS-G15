@@ -50,6 +50,26 @@ function forgotemail(data) {
     }
 }
 
+function resetMyPassword(data) {
+    const users = getSession().users
+    const getUser = users[getSession().id];
+    if(getUser.password != data.old){
+        return "Mot de passe incorrect";
+    } else {
+        for (const key in users) {
+            if (Object.hasOwnProperty.call(users, key)) {
+                const element = users[key];
+                element.password = data.password;
+            }
+        }
+        setSession({
+            ...getSession(),
+            users
+        })
+        return "success";
+    }
+}
+
 function getUserConnect() {
     return getSession().users[getSession().id]
 }
@@ -59,4 +79,4 @@ function users() {
 }
 
 
-export {signin, signup, forgotemail, getUserConnect, users}
+export {signin, signup, forgotemail, getUserConnect, users, resetMyPassword}

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { Form, Alert, Button } from '@themesberg/react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from "../routes";
-import {signin,signup, forgotemail} from "../data/Users"
+import {signin,signup, forgotemail, resetMyPassword} from "../data/Users"
 import { setSession,getSession } from "../context/session";
 
 export const Login = () => {
@@ -50,6 +50,7 @@ export const Login = () => {
     else {
       const req = signin(sendValue);
       if(typeof req == "number"){
+        document.getElementById("form").reset();
         setSession({
           ...getSession(),
           login: true,
@@ -148,6 +149,7 @@ export const Register = () => {
       } else {
         const req = signup({email: sendValue.email, password: sendValue.password});
         if(req == "success"){
+          document.getElementById("form").reset();
           setDisplay({
             message: "Compte créé avec succès",
             type: "success"
@@ -208,7 +210,7 @@ export const ResetPassword = () => {
   const history = useHistory();
 
   const defaultData =  {
-    "email": null,
+    "old": null,
     "password": null,
     "confirm": null
   }
@@ -222,7 +224,7 @@ export const ResetPassword = () => {
     })
   }
 
-  function register(e){
+  function reset(e){
     e.preventDefault();
     send();
   }
@@ -251,15 +253,13 @@ export const ResetPassword = () => {
           type: "danger"
         })
       } else {
-        const req = signup({email: sendValue.email, password: sendValue.password});
+        const req = resetMyPassword({password: sendValue.password, old: sendValue.old});
         if(req == "success"){
+          document.getElementById("form").reset();
           setDisplay({
-            message: "Compte créé avec succès",
+            message: "Mot de passe modifié avec succès",
             type: "success"
           })
-          setTimeout(() => {
-            history.push(Routes.Auth.path);
-          }, 3000);
         } else {
           setDisplay({
             message: req,
@@ -273,7 +273,7 @@ export const ResetPassword = () => {
   return (
     <>
       <h1>Change passeword</h1>
-      <Form onSubmit={async (e)=>{register(e)}} className="mt-5">
+      <Form onSubmit={async (e)=>{reset(e)}} className="mt-5">
           {display.message && display.type &&
             <Form.Group className="mt-4 mb-2">
               <Alert variant={display.type}>{display.message}</Alert>
@@ -296,7 +296,7 @@ export const ResetPassword = () => {
           </Form.Group>
 
           <div className="mt-4 text-center">
-            <Button variant="primary" type="submit">send</Button>
+            <Button className="col-12 col-md-5" variant="primary" type="submit">send</Button>
           </div>
       </Form>
     </>
@@ -346,13 +346,15 @@ export const Forgot = () => {
     else {
       const req = forgotemail(sendValue);
       if(req == "success"){
+        document.getElementById("form").reset();
         setDisplay({
           message: "Mot de passe réinitialisé en 1234",
           type: "success"
         })
         setTimeout(() => {
           history.push(Routes.Auth.path);
-        }, 3000);      } else {
+        }, 3000);      
+      } else {
         setDisplay({
           message: req,
           type: "danger"
