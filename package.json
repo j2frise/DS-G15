@@ -40,7 +40,6 @@
     "js-cookie": "^2.2.1",
     "mdbreact": "^5.0.2",
     "moment-timezone": "^0.5.31",
-    "node-sass": "^4.14.1",
     "query-string": "^7.0.1",
     "react": "^16.13.1",
     "react-bootstrap-typeahead": "^5.1.4",
@@ -58,6 +57,8 @@
     "react-scripts": "3.4.3",
     "react-select": "^5.1.0",
     "react-transition-group": "^4.4.1",
+    "sass": "^1.49.7",
+    "sass-loader": "^12.4.0",
     "simplebar-react": "^2.3.0"
   },
   "scripts": {

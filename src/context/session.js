@@ -8,7 +8,7 @@ export const setSession = session => {
 export const getSession = () => {
   const session = localStorage.getItem("session");
   if (!session) {
-    return {login_sso: false, login_sso_azure: false, restart_password: false, notaccess: true};
+    return {login: false, users: []};
   } else {
     return JSON.parse(session);
   }

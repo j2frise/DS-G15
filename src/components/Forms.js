@@ -1,174 +1,161 @@
 
-import React, { useState } from "react";
-import moment from "moment-timezone";
-import Datetime from "react-datetime";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Card, Form, Button, InputGroup } from '@themesberg/react-bootstrap';
+import React, {useEffect, useState} from "react";
+import { Form, Alert, Button } from '@themesberg/react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Routes } from "../routes";
 
+export const Login = () => {
+  const [sendValue, setSendValue] = useState({})
+  const [display, setDisplay] = useState({message:null, type:null});
 
-export const GeneralInfoForm = () => {
-  const [birthday, setBirthday] = useState("");
+  const defaultData =  {
+    "email": null,
+    "password": null
+  }
+  function handleChange(e){
+
+    let value = e.target.value
+    let stateField = e.target.name
+    setSendValue({
+      ...sendValue,
+      [stateField]: value?value:null
+    })
+  }
+
+  function login(e){
+    e.preventDefault();
+    send();
+  }
+
+  function send(){
+
+  }
 
   return (
-    <Card border="light" className="bg-white shadow-sm mb-4">
-      <Card.Body>
-        <h5 className="mb-4">General information</h5>
-        <Form>
-          <Row>
-            <Col md={6} className="mb-3">
-              <Form.Group id="firstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your first name" />
-              </Form.Group>
-            </Col>
-            <Col md={6} className="mb-3">
-              <Form.Group id="lastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control required type="text" placeholder="Also your last name" />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="align-items-center">
-            <Col md={6} className="mb-3">
-              <Form.Group id="birthday">
-                <Form.Label>Birthday</Form.Label>
-                <Datetime
-                  timeFormat={false}
-                  onChange={setBirthday}
-                  renderInput={(props, openCalendar) => (
-                    <InputGroup>
-                      <InputGroup.Text><FontAwesomeIcon icon={faCalendarAlt} /></InputGroup.Text>
-                      <Form.Control
-                        required
-                        type="text"
-                        value={birthday ? moment(birthday).format("MM/DD/YYYY") : ""}
-                        placeholder="mm/dd/yyyy"
-                        onFocus={openCalendar}
-                        onChange={() => { }} />
-                    </InputGroup>
-                  )} />
-              </Form.Group>
-            </Col>
-            <Col md={6} className="mb-3">
-              <Form.Group id="gender">
-                <Form.Label>Gender</Form.Label>
-                <Form.Select defaultValue="0">
-                  <option value="0">Gender</option>
-                  <option value="1">Female</option>
-                  <option value="2">Male</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6} className="mb-3">
-              <Form.Group id="emal">
-                <Form.Label>Email</Form.Label>
-                <Form.Control required type="email" placeholder="name@company.com" />
-              </Form.Group>
-            </Col>
-            <Col md={6} className="mb-3">
-              <Form.Group id="phone">
-                <Form.Label>Phone</Form.Label>
-                <Form.Control required type="number" placeholder="+12-345 678 910" />
-              </Form.Group>
-            </Col>
-          </Row>
+    <>
+      <h1>Sign in</h1>
+      <Form onSubmit={async (e)=>{login(e)}} className="mt-5">
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Email</Form.Label>
+            <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
+          </Form.Group>
 
-          <h5 className="my-4">Address</h5>
-          <Row>
-            <Col sm={9} className="mb-3">
-              <Form.Group id="address">
-                <Form.Label>Address</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your home address" />
-              </Form.Group>
-            </Col>
-            <Col sm={3} className="mb-3">
-              <Form.Group id="addressNumber">
-                <Form.Label>Number</Form.Label>
-                <Form.Control required type="number" placeholder="No." />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={4} className="mb-3">
-              <Form.Group id="city">
-                <Form.Label>City</Form.Label>
-                <Form.Control required type="text" placeholder="City" />
-              </Form.Group>
-            </Col>
-            <Col sm={4} className="mb-3">
-              <Form.Group className="mb-2">
-                <Form.Label>Select state</Form.Label>
-                <Form.Select id="state" defaultValue="0">
-                  <option value="0">State</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col sm={4}>
-              <Form.Group id="zip">
-                <Form.Label>ZIP</Form.Label>
-                <Form.Control required type="tel" placeholder="ZIP" />
-              </Form.Group>
-            </Col>
-          </Row>
-          <div className="mt-3">
-            <Button variant="primary" type="submit">Save All</Button>
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Password</Form.Label>
+            <Form.Control required type="password" name="password" onChange={(e)=>{handleChange(e)}} placeholder="**********" />
+          </Form.Group>
+          
+          <Link to={Routes.Forgot.path}>Forgot password ?</Link>
+          <div className="mt-4 text-center">
+            <Button variant="primary" type="submit">sign in</Button>
           </div>
-        </Form>
-      </Card.Body>
-    </Card>
+          <div className="mt-3 text-center">
+            <Link to={Routes.Register.path}>I want to sign up</Link>
+          </div>
+      </Form>
+    </>
   );
 };
+
+export const Register = () => {
+  const [sendValue, setSendValue] = useState({})
+  const [display, setDisplay] = useState({message:null, type:null});
+
+  const defaultData =  {
+    "email": null,
+    "password": null,
+    "confirm": null
+  }
+  function handleChange(e){
+
+    let value = e.target.value
+    let stateField = e.target.name
+    setSendValue({
+      ...sendValue,
+      [stateField]: value?value:null
+    })
+  }
+
+  function register(e){
+    e.preventDefault();
+    send();
+  }
+
+  function send(){
+    
+  }
+
+  return (
+    <>
+      <h1>Sign up</h1>
+      <Form onSubmit={async (e)=>{register(e)}} className="mt-5">
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Email</Form.Label>
+            <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
+          </Form.Group>
+
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Password</Form.Label>
+            <Form.Control required type="password" name="password" onChange={(e)=>{handleChange(e)}} placeholder="**********" />
+          </Form.Group>
+
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Password confirmation</Form.Label>
+            <Form.Control required type="password" name="confirm" onChange={(e)=>{handleChange(e)}} placeholder="**********" />
+          </Form.Group>
+
+          <div className="mt-4 text-center">
+            <Button variant="primary" type="submit">sign up</Button>
+          </div>
+          <div className="mt-3 text-center">
+            <Link to={Routes.Auth.path}>I want to sign in</Link>
+          </div>
+      </Form>
+    </>
+  );
+};
+
+export const Forgot = () => {
+  const [sendValue, setSendValue] = useState({})
+  const [display, setDisplay] = useState({message:null, type:null});
+
+  const defaultData =  {
+    "email": null  
+  }
+  function handleChange(e){
+
+    let value = e.target.value
+    let stateField = e.target.name
+    setSendValue({
+      ...sendValue,
+      [stateField]: value?value:null
+    })
+  }
+
+  function forgot(e){
+    e.preventDefault();
+    send();
+  }
+
+  function send(){
+    
+  }
+  
+  return (
+    <>
+      <h1>Forgot</h1>
+      <Form onSubmit={async (e)=>{forgot(e)}} className="mt-5">
+          <Form.Group className="mt-4 mb-2">
+            <Form.Label>Email</Form.Label>
+            <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
+          </Form.Group>
+
+          <Link to={Routes.Auth.path}>Sign in </Link> | <Link to={Routes.Register.path}>Sign up </Link>
+          <div className="mt-4 text-center">
+            <Button variant="primary" type="submit">send</Button>
+          </div>
+      </Form>
+    </>
+  );
+};
+
