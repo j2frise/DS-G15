@@ -11,7 +11,7 @@ function signin(data) {
         if(getUser.password != data.password){
             return "Mot de passe incorrect";
         } else {
-            return "success";
+            return users.findIndex(x => x.email ===getUser.email);
         }
     }
 }
@@ -50,4 +50,13 @@ function forgotemail(data) {
     }
 }
 
-export {signin, signup, forgotemail}
+function getUserConnect() {
+    return getSession().users[getSession().id]
+}
+
+function users() {
+    return getSession().users
+}
+
+
+export {signin, signup, forgotemail, getUserConnect, users}

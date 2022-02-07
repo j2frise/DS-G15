@@ -14,8 +14,7 @@
         padding  : 0.475rem 1.45rem;
         font-size: 0.7rem;
     }
-
-    &:hover, &:active {
+    &.btn-primary:hover, &.btn-primary:active {
         background: $primary-variant;
     }
 }

@@ -49,10 +49,11 @@ export const Login = () => {
     }
     else {
       const req = signin(sendValue);
-      if(req == "success"){
+      if(typeof req == "number"){
         setSession({
           ...getSession(),
-          login: true
+          login: true,
+          id: req
         })
         history.push(Routes.Dashboard.path);
       } else {

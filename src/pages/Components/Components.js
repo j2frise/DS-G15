@@ -14,7 +14,7 @@ export default () => {
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
-          Page dashboard
+          Welcom 
         </Container>
       </section>
     </main>
