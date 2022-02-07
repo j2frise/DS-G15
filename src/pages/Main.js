@@ -23,11 +23,19 @@ const RouteAuth = ({ component: Component, ...rest }) => {
 
 const RouteDashboard = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
+  const [session, setSessions] = useState(getSession());  
+  const history = useHistory();
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!session.login) {
+      history.push(Routes.Auth.path);
+    }
+  }, [session.login]);
 
   return (
       <Route {...rest} render={props => (

@@ -1,12 +1,15 @@
 
 import React, {useEffect, useState} from "react";
 import { Form, Alert, Button } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Routes } from "../routes";
+import {signin,signup, forgotemail} from "../data/Users"
+import { setSession,getSession } from "../context/session";
 
 export const Login = () => {
   const [sendValue, setSendValue] = useState({})
   const [display, setDisplay] = useState({message:null, type:null});
+  const history = useHistory();
 
   const defaultData =  {
     "email": null,
@@ -14,7 +17,7 @@ export const Login = () => {
   }
   function handleChange(e){
 
-    let value = e.target.value
+    let value = e.target.value.trim()
     let stateField = e.target.name
     setSendValue({
       ...sendValue,
@@ -28,7 +31,37 @@ export const Login = () => {
   }
 
   function send(){
+    let nb = 0;
+    for (const key in sendValue) {
+      if (Object.hasOwnProperty.call(sendValue, key)) {
+        const element = sendValue[key];
+        if(!element){
+          nb++;
+        }
+      }
+    }
 
+    if(nb > 0){
+      setDisplay({
+        message: "Veuillez remplir tous les champs",
+        type: "danger"
+      })
+    }
+    else {
+      const req = signin(sendValue);
+      if(req == "success"){
+        setSession({
+          ...getSession(),
+          login: true
+        })
+        history.push(Routes.Dashboard.path);
+      } else {
+        setDisplay({
+          message: req,
+          type: "danger"
+        })
+      }
+    }
   }
 
   return (
@@ -40,7 +73,7 @@ export const Login = () => {
               <Alert variant={display.type}>{display.message}</Alert>
             </Form.Group>
           }
-          
+
           <Form.Group className="mt-4 mb-2">
             <Form.Label>Email</Form.Label>
             <Form.Control required type="email" name="email" onChange={(e)=>{handleChange(e)}} placeholder="johndoe@email.com" />
@@ -66,6 +99,7 @@ export const Login = () => {
 export const Register = () => {
   const [sendValue, setSendValue] = useState({})
   const [display, setDisplay] = useState({message:null, type:null});
+  const history = useHistory();
 
   const defaultData =  {
     "email": null,
@@ -74,7 +108,7 @@ export const Register = () => {
   }
   function handleChange(e){
 
-    let value = e.target.value
+    let value = e.target.value.trim()
     let stateField = e.target.name
     setSendValue({
       ...sendValue,
@@ -88,7 +122,46 @@ export const Register = () => {
   }
 
   function send(){
-    
+    let nb = 0;
+    for (const key in sendValue) {
+      if (Object.hasOwnProperty.call(sendValue, key)) {
+        const element = sendValue[key];
+        if(!element){
+          nb++;
+        }
+      }
+    }
+
+    if(nb > 0){
+      setDisplay({
+        message: "Veuillez remplir tous les champs",
+        type: "danger"
+      })
+    }
+    else {
+      if(sendValue.password != sendValue.confirm){
+        setDisplay({
+          message: "Les mots de passe doivent être identiques",
+          type: "danger"
+        })
+      } else {
+        const req = signup({email: sendValue.email, password: sendValue.password});
+        if(req == "success"){
+          setDisplay({
+            message: "Compte créé avec succès",
+            type: "success"
+          })
+          setTimeout(() => {
+            history.push(Routes.Auth.path);
+          }, 3000);
+        } else {
+          setDisplay({
+            message: req,
+            type: "danger"
+          })
+        }
+      }
+    }
   }
 
   return (
@@ -130,13 +203,14 @@ export const Register = () => {
 export const Forgot = () => {
   const [sendValue, setSendValue] = useState({})
   const [display, setDisplay] = useState({message:null, type:null});
+  const history = useHistory();
 
   const defaultData =  {
     "email": null  
   }
   function handleChange(e){
 
-    let value = e.target.value
+    let value = e.target.value.trim()
     let stateField = e.target.name
     setSendValue({
       ...sendValue,
@@ -151,11 +225,15 @@ export const Forgot = () => {
 
   function send(){
     let nb = 0;
-    sendValue.forEach(element => {
-      if(!element.trim()){
-        nb++;
+     for (const key in sendValue) {
+      if (Object.hasOwnProperty.call(sendValue, key)) {
+        const element = sendValue[key];
+        if(!element){
+          nb++;
+        }
       }
-    });
+    }
+    
     if(nb > 0){
       setDisplay({
         message: "Veuillez remplir tous les champs",
@@ -163,7 +241,20 @@ export const Forgot = () => {
       })
     }
     else {
-
+      const req = forgotemail(sendValue);
+      if(req == "success"){
+        setDisplay({
+          message: "Mot de passe réinitialisé en 1234",
+          type: "success"
+        })
+        setTimeout(() => {
+          history.push(Routes.Auth.path);
+        }, 3000);      } else {
+        setDisplay({
+          message: req,
+          type: "danger"
+        })
+      }
     }
   }
   
