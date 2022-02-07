@@ -69,7 +69,7 @@ export const Login = () => {
   return (
     <>
       <h1>Sign in</h1>
-      <Form onSubmit={async (e)=>{login(e)}} className="mt-5">
+      <Form onSubmit={async (e)=>{login(e)}} id="form" className="mt-5">
           {display.message && display.type &&
             <Form.Group className="mt-4 mb-2">
               <Alert variant={display.type}>{display.message}</Alert>
@@ -170,7 +170,7 @@ export const Register = () => {
   return (
     <>
       <h1>Sign up</h1>
-      <Form onSubmit={async (e)=>{register(e)}} className="mt-5">
+      <Form onSubmit={async (e)=>{register(e)}} id="form" className="mt-5">
           {display.message && display.type &&
             <Form.Group className="mt-4 mb-2">
               <Alert variant={display.type}>{display.message}</Alert>
@@ -273,7 +273,7 @@ export const ResetPassword = () => {
   return (
     <>
       <h1>Change passeword</h1>
-      <Form onSubmit={async (e)=>{reset(e)}} className="mt-5">
+      <Form onSubmit={async (e)=>{reset(e)}} id="form" className="mt-5">
           {display.message && display.type &&
             <Form.Group className="mt-4 mb-2">
               <Alert variant={display.type}>{display.message}</Alert>
@@ -366,7 +366,7 @@ export const Forgot = () => {
   return (
     <>
       <h1>Forgot</h1>
-      <Form onSubmit={async (e)=>{forgot(e)}} className="mt-5">
+      <Form onSubmit={async (e)=>{forgot(e)}} id="form" className="mt-5">
           {display.message && display.type &&
             <Form.Group className="mt-4 mb-2">
               <Alert variant={display.type}>{display.message}</Alert>
