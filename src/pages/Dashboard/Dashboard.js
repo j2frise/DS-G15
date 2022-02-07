@@ -28,11 +28,18 @@ function logout(){
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
           <Row>
-            <Col sm="9">Welcome <strong>{getUserConnect().email}</strong></Col>
+            <Col sm="7">Welcome <strong>{getUserConnect().email}</strong></Col>
+            <Col sm="2">
+              <Link to={Routes.Components.path}>Components list</Link>
+            </Col>
             <Col sm="3">
               <Button variant="danger" className="btn-xs" onClick={logout}>Lougout</Button>
             </Col>
           </Row>
+
+          <Card className="mt-5">
+
+          </Card>
         </Container>
       </section>
     </main>

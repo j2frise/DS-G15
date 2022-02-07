@@ -87,7 +87,7 @@ export const Login = () => {
           
           <Link to={Routes.Forgot.path}>Forgot password ?</Link>
           <div className="mt-4 text-center">
-            <Button variant="primary" type="submit">sign in</Button>
+            <Button className="col-12 col-md-5" variant="primary" type="submit">sign in</Button>
           </div>
           <div className="mt-3 text-center">
             <Link to={Routes.Register.path}>I want to sign up</Link>
@@ -194,7 +194,7 @@ export const Register = () => {
             <Button variant="primary" type="submit">sign up</Button>
           </div>
           <div className="mt-3 text-center">
-            <Link to={Routes.Auth.path}>I want to sign in</Link>
+            <Link  className="col-12 col-md-5" to={Routes.Auth.path}>I want to sign in</Link>
           </div>
       </Form>
     </>
@@ -276,7 +276,7 @@ export const Forgot = () => {
 
           <Link to={Routes.Auth.path}>Sign in </Link> | <Link to={Routes.Register.path}>Sign up </Link>
           <div className="mt-4 text-center">
-            <Button variant="primary" type="submit">send</Button>
+            <Button className="col-12 col-md-5" variant="primary" type="submit">send</Button>
           </div>
       </Form>
     </>
